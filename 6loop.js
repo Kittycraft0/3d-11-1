@@ -12,6 +12,10 @@
 var n=0;
 
 
+//fps and time stuffs
+var startTime=new Date().getTime();
+var lastTime=new Date().getTime();
+
 //maybe i should have gotten more used to using while(true){}s
 //instead of these... these sure are nice but they are not in like
 //any other language...
@@ -22,36 +26,20 @@ data.loopFunction=(code)=>{
   ctx.clear();
   //reset/use the text object
   //console.log(data);
+  pause();
+
+  //data.log(data.text);
   data.text.reset();
-  
   //if(n>=1)
   //  pause();
 
   
   
-//make sure nothing isNaN
-var objectKeys=Object.keys(data.objects);
-//console.log(objectKeys);
-for(var i=0;i<objectKeys.length;i++){
-  var obj=data.objects[objectKeys[i]];
-  //console.log(obj);
-  
-  if(
-    isNaN(obj.pos[0])||
-    isNaN(obj.pos[1])||
-    isNaN(obj.vel[0])||
-    isNaN(obj.vel[1])
-  ){
-    console.error(
-      objectKeys[i]+" contains undefined values"+"\n"+
-      obj.pos[0]+" "+
-      obj.pos[1]+" "+
-      obj.vel[0]+" "+
-      obj.vel[1]
-    );
-    pause();
+  //make sure nothing isNaN
+  //var objectKeys=Object.keys(data.objects);
+  if(settings.detectUndefinedValues){
+    data.checkUndefined();
   }
-}
   
   //gets the keys to all objects
   //set it to something else as in some keys but not all to have
@@ -75,7 +63,7 @@ for(var i=0;i<objectKeys.length;i++){
   }
   
   
-  data.camera.updatePosition();
+  //data.camera.updatePosition();
   
   var loopReturnValue=false;
   
@@ -92,18 +80,19 @@ for(var i=0;i<objectKeys.length;i++){
 
   //console.log(data.objects);
   //player ball stuffs
-  data.objects["ball1"].getControlsFromKeyboard();
-  data.objects["ball1"].move();
+  //data.objects["ball1"].getControlsFromKeyboard();
+  //data.objects["ball1"].move();
   //console.log(data.objects["ball1"].up);
   //data.objects["ball1"].vel[0]+=-.1;
   
-  for(var name in data.objects){
+  //for(var name in data.objects){
     //data.objects[name].updatePositionByVelocity();
-  }
+  //}
   //data.objects["testGraph"].data[
   //  data.objects["testGraph"].data.length
   //]=data.objects["ball1"].vel[0];
-  
+
+  /*
   data.objects["ballPositionGraph"].addData(
     data.objects["ball1"].pos[0]);
   data.objects["ballPositionGraph"].cutData(1000);
@@ -115,7 +104,7 @@ for(var i=0;i<objectKeys.length;i++){
   
   data.objects["ballAccelerationGraph"].addData(
     data.objects["ball1"].acc[0]);
-  data.objects["ballAccelerationGraph"].cutData(1000);
+  data.objects["ballAccelerationGraph"].cutData(1000);*/
   
   //center the camera on the blue square?
   //data.camera.pos[0]=Math.cos(n/10)*100;
@@ -138,18 +127,8 @@ for(var i=0;i<objectKeys.length;i++){
   //render the balls and objects and stuffs
   for(var name in data.objects){
     var theObject=data.objects[name];
-    //console.log(name);
-    //console.log(theObject);
-    //render the objects
-    //comment the below line to not render the objects
-    //if(name!="box1")
     theObject.render();
   }
-
-  
-  //runs the toggle for whether or not to show lines
-  lineAnimationToggle(objectKeys);
-
 
   //let the text be toggled on and off
   //for the possibility of great viewing pleasure

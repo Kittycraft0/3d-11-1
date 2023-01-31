@@ -116,4 +116,15 @@ ctx.moveTo(10,10);
 ctx.lineTo(30,30);
 ctx.stroke(); //had a stroke
 
+//quality-of-life functions -1/30/2023
+//-1/30/2023
+function isNaNorUndefined(value){
+  return(
+    typeof value==="undefined"||
+    (typeof value==="number"&&isNaN(value))
+  );
+}
+
+
+
 console.log("1 setup loaded!");

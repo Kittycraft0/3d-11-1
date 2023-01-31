@@ -1,10 +1,49 @@
+class Text{
+  //constructor(size,font,color){
+  constructor(json){
+    json=json?json:{};
+    this.size=json.size?json.size:48;
+    this.font=json.font?json.font:"serif";
+    this.color=json.color?json.color:"none";
+    this.line=json.line?json.line:1;
+  }
+  reset(){
+    this.line=1;
+  }
+  println(text,color){
+    //"convert to template string" suggestion...?
+    ctx.font=`${this.size}px ${this.font}`;
+    ctx.beginPath();
+    ctx.fillStyle=color?color:this.color;
+    ctx.fillText(
+      text,
+      -canvasWidth/2,-canvasHeight/2+this.size*this.line);
+    //this ? : single line conditionals thing is so nice!
+    //console.log(ctx.fillStyle);
+    ctx.fill();
+    ctx.closePath();
+    this.line++;
+  }
+}
+
 class Data{
-  camera=new Camera(0,0,0,0,0);
-  text=new Text(48,"serif","white");
+  //camera=new Camera(0,0,0,0,0);
+  camera="to-be-defined object or object path";
+  //text=new Text(48,"serif","white");
+  text=new Text();//"to-be-defined object or object path";
   objects={};
   loopFunction=()=>{
     console.error("data.loopFunction(); not defined yet!");
   }
+
+  constructor(json){
+    json=json?json:{};
+    this.camera=json.camera?json.camera:this.camera;
+    this.text=json.text?json.text:this.text;
+    this.objects=json.objects?json.objects:this.objects;
+    this.loopFunction=json.loopFunction?json.loopFunction:this.loopFunction;
+  }
+  
   render(){
     for(obj in objects){
       obj.render();
@@ -49,17 +88,36 @@ class Data{
   //check for undefined values all throughout the inputted object -1/29/2023
   //if no object is inputted then it will check all throughout the data object here
   //recursive function
-  checkUndefined(object){
+  checkUndefined(object,path){
     object=object?object:this;
+    path=path?path:"data";
+    var containsUndefined=false;
     //const lol
     const keys=Object.keys(object);
+    //this.log(keys);
+    for(var i=0;i<keys.length;i++){
+      const newPath=path+"."+keys[i];
+      //this.log(newPath);
+      if(typeof object[keys[i]]==="object"){
+        var checkedUndefined=this.checkUndefined(object[keys[i]],newPath);
+        containsUndefined=checkedUndefined?true:containsUndefined;
+      }else{
+        //if(isNaN(object[keys[i]])||object[keys[i]]===undefined){
+        if(isNaNorUndefined(object[keys[i]])){
+          data.log(newPath+" is \"undefined\"!");//+object[keys[i]]);
+        }
+      }
+    }
     
+    return(containsUndefined);
   }
 }
 
-var data=new Data();
+//var data=new Data();
+//data.log(data.checkUndefined());
+//data.log(data.loopfunction);
 
-//could also probably work as a 2d object as well
+//could also probably work as a 2d object as well -1/29/2023
 class object3d{
   //-1/29/2023
   constructor(json){
@@ -149,8 +207,9 @@ class object3d{
       this.da[i]=0;
     }
   }
-}
 
+  //
+}
 
 
 console.log("4 classData loaded!");
