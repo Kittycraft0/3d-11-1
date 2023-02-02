@@ -126,6 +126,7 @@ class object3d{
       json.x?json.x:0,
       json.y?json.y:0,
       json.z?json.z:0,
+      json.w?json.w:0,
     ];
     //object velocity
     //movement velocity
@@ -133,6 +134,7 @@ class object3d{
       json.vx?json.vx:json.xv?json.xv:0,
       json.vy?json.vy:json.yv?json.yv:0,
       json.vz?json.vz:json.zv?json.zv:0,
+      json.vw?json.vw:json.wv?json.wv:0,
     ];
     //object acceleration
     //movement acceleration
@@ -140,6 +142,7 @@ class object3d{
       json.ax?json.ax:json.xa?json.xa:0,
       json.ay?json.ay:json.ya?json.ya:0,
       json.az?json.az:json.za?json.za:0,
+      json.aw?json.aw:json.wa?json.wa:0,
     ];
     //object direction position
     //direction position
@@ -147,6 +150,7 @@ class object3d{
       json.dx?json.dx:0,
       json.dy?json.dy:0,
       json.dz?json.dz:0,
+      json.dw?json.dw:0,
     ];
     //object direction velocity
     //direction velocity
@@ -154,6 +158,7 @@ class object3d{
       json.dvx?json.dvx:jsoc.dxv?json.dxv:0,
       json.dvy?json.dvy:json.dyv?json.dyv:0,
       json.dvz?json.dvz:json.dzv?json.dzv:0,
+      json.dwz?json.dwz:json.dwv?json.dwv:0,
     ];
     //object direction acceleration
     //direction acceleration
@@ -161,6 +166,7 @@ class object3d{
       json.dax?json.dax:json.dxa?json.dxa:0,
       json.day?json.day:json.dya?json.dya:0,
       json.daz?json.daz:json.dza?json.dza:0,
+      json.daw?json.daw:json.dwa?json.dwa:0,
     ];
 
     //model
