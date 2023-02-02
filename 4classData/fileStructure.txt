@@ -1,0 +1,79 @@
+created -1/31/2022 Tuesday 1:17 PM CST
+This text file here should document my thoughts on how the file structure should work.
+
+data{
+  objects{
+    box1:{position, direction, and model data among other things},
+    box2:{...},
+    box3:{...},
+    box4:{...},
+    box5:{...},
+    box6:{...},
+    box7:{...},
+    box8:{...},
+    etc.
+  }
+  structure{
+    box1:{
+      box5:{
+        box8:{}
+      },
+      box2:{}
+    },
+    box3:{
+      box6:{}
+    },
+    box7:{};
+    etc.
+  }
+}
+
+In summary, there is a new way of ordering things: data.objects and data.structure.
+
+Way back when, I used just data.objects. I had it at one point where one of the properties of each object was its children, and at another point I just stuck all the children in as direct properties of the object. This has a few problems: 1. object data is stored in the same place as its children, so children can not have the same name as the object's properties, which way cause problems at times; another problem is how viewing them would be more confusing; and yet another problem with that is how one object holds all the data, so if it were deleted, its children would be deleted along with it. That last one may not be so bad, nor many of them, really. That seems to be all of the problems. However, my new way is different.
+
+In my new way, the objects property of data has all objects accessed directly from the objects property. The structure of what is a parent to what and what is a child to what is stored in the structures property. The main benefit is seperation. A drawback is immediate access to the object's files; however, a method in the data class that takes an input of the location of the object and outputs a reference to the object may work. Another problem, this one probably bigger and might even overthrow my whole idea, is that two children in seperate objects can not have the same name. However, a solution to both of these problems may be having the "location" of the object in the structure as its own name. For example:
+
+data{
+  objects{
+    box1:{position, direction, and model data among other things},
+    box1/box2:{...},
+    box3:{...},
+    box4:{...},
+    box1/box5:{...},
+    box3/box6:{...},
+    box7:{...},
+    box1/box5/box8:{...},
+    etc.
+  }
+  structure{
+    box1:{
+      box5:{
+        box8:{}
+      },
+      box2:{}
+    },
+    box3:{
+      box6:{}
+    },
+    box7:{};
+    etc.
+  }
+}
+However, a problem with that is referencing them would require quotes:
+data.objects["box1/box5/box8"]
+There is also the problem of objects that are not included in the structure, such as box4. That may not be rendered, but its existance may still draw processing power from the program.
+
+Upsides:
+- Clearer structures
+- Possibly clearer code
+- Can be implemented later
+- Possibly allows all names
+Downsides:
+- Maybe not as efficient
+- Possibly limits object names
+- Possibly eliminates ability to use '/ character, for whatever reason that would be used
+
+Conclusion: My previous method was probably better, even if it was less clear.
+
+Now, how do I use quaternions!?

@@ -37,10 +37,10 @@ for(var i in values){
 */
 //console.log("Script ran!");
 setInterval(()=>{
-  ctx.fillStyle="red";
-  ctx.beginPath();
-  ctx.rect(10,10,30,30);
-  ctx.fill();
+  //ctx.fillStyle="red";
+  //ctx.beginPath();
+  //ctx.rect(10,10,30,30);
+  //ctx.fill();
 },1000/60);
 
 //console.log(isNaN(()=>{console.log("oranges");}));

@@ -35,7 +35,7 @@ class Data{
   loopFunction=()=>{
     console.error("data.loopFunction(); not defined yet!");
   }
-
+  //constructor -1/29/2023
   constructor(json){
     json=json?json:{};
     this.camera=json.camera?json.camera:this.camera;
@@ -43,16 +43,16 @@ class Data{
     this.objects=json.objects?json.objects:this.objects;
     this.loopFunction=json.loopFunction?json.loopFunction:this.loopFunction;
   }
-  
+  //render all -1/29/2023
   render(){
     for(obj in objects){
       obj.render();
     }
   }
+  //add an object -before 1/29/2023
   addObject(name,object){
     this.objects[name]=object;
   }
-
   //update all object states -1/29/2023
   updateAllObjectStates(){
     var objectKeys=Object.keys(this.objects);
@@ -60,24 +60,20 @@ class Data{
       this.objects[objectKeys[i]].updateObjectState();
     }
   }
-
-  //reset the acceleration of all object accelerations and direction accelerations to zero
-  //to avoid quadratic movement lol
-  //-1/29/2023
+  //reset the acceleration of all object accelerations and direction 
+  //accelerations to zero to avoid quadratic movement -1/29/2023
   resetAllObjectAccelerations(){
     var objectKeys=Object.keys(this.objects);
     for(var i=0;i<objectKeys.length;i++){
       this.objects[objectKeys[i]].updateObjectState();
     }
   }
-  
   //log a value only if the settings debug value is true -1/29/2023
   log(value){
     if(settings.debug){
       console.log(value);
     }
   }
-
   //errors a value only if the settings debug value is true -1/29/2023
   error(value){
     if(settings.debug){
@@ -85,21 +81,21 @@ class Data{
     }
   }
   
-  //check for undefined values all throughout the inputted object -1/29/2023
-  //if no object is inputted then it will check all throughout the data object here
-  //recursive function
+  //check for undefined values all throughout the inputted object
+  //if no object is inputted then it will check all throughout the 
+  //data object here
+  //recursive function -1/29/2023
   checkUndefined(object,path){
     object=object?object:this;
     path=path?path:"data";
     var containsUndefined=false;
-    //const lol
     const keys=Object.keys(object);
-    //this.log(keys);
     for(var i=0;i<keys.length;i++){
       const newPath=path+"."+keys[i];
-      //this.log(newPath);
       if(typeof object[keys[i]]==="object"){
-        var checkedUndefined=this.checkUndefined(object[keys[i]],newPath);
+        //check if it contains undefined
+        var checkedUndefined=
+          this.checkUndefined(object[keys[i]],newPath);
         containsUndefined=checkedUndefined?true:containsUndefined;
       }else{
         //if(isNaN(object[keys[i]])||object[keys[i]]===undefined){
@@ -118,8 +114,11 @@ class Data{
 //data.log(data.loopfunction);
 
 //could also probably work as a 2d object as well -1/29/2023
+//although maybe not if attraction works in all three dimensions
+//since small errors turning the z of 0 to not 0 could possibly
+//mess up the objects falling towards each other though -1/31/2023
 class object3d{
-  //-1/29/2023
+  //the constructor -1/29/2023
   constructor(json){
     //object position
     //movement position
@@ -163,8 +162,10 @@ class object3d{
       json.day?json.day:json.dya?json.dya:0,
       json.daz?json.daz:json.dza?json.dza:0,
     ];
+
+    //model
+    this.model=json.model?json.model:"box1";
   }
-  //mmm yes it will definitely only ever be dax instead of dxa for instance...
   
   //thanks chatgpt for the nice name! -1/29/2023
   updateObjectState(){
@@ -201,14 +202,46 @@ class object3d{
       this.ma[i]=0;
     }
   }
-  //reset only direction acceleration
+  //reset only direction acceleration -1/30/2023
   resetDirectionAcceleration(){
     for(var i=0;i<this.da.length;i++){
       this.da[i]=0;
     }
   }
 
-  //
+  //add acceleration to movement -1/31/2023
+  accelerate(list){
+    for(var i in list){
+      ma[i]+=list[i];
+    }
+  }
+  //add acceleration to viewing direction -1/31/2023
+  accelerateView(list){
+    for(var i in list){
+      da[i]+=list[i];
+    }
+  }
+
+  //decay movement velocity -1/31/2023
+  decayMovement(num){
+    num=num?num:settings.defaultMovementDecay;
+    for(var i in mv){
+      mv[i]*=num;
+    }
+  }
+  //decay direction velocity -1/31/2023
+  decayDirection(num){
+    num=num?num:settings.defaultDirectionDecay;
+    for(var i in mv){
+      dv[i]*=num;
+    }
+  }
+
+  //render function
+  render(){
+    
+  }
+  
 }
 
 

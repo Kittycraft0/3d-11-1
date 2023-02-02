@@ -24,19 +24,15 @@ data.loopFunction=(code)=>{
   resetCanvasSize();
   //clear the canvas
   ctx.clear();
-  //reset/use the text object
-  //console.log(data);
-  pause();
+  //uncomment to only run one frame -1/31/2022
+  //pause();
 
-  //data.log(data.text);
+  //resets the text -1/31/2022
   data.text.reset();
-  //if(n>=1)
-  //  pause();
-
   
   
-  //make sure nothing isNaN
-  //var objectKeys=Object.keys(data.objects);
+  
+  //make sure nothing isNaN or undefined
   if(settings.detectUndefinedValues){
     data.checkUndefined();
   }
